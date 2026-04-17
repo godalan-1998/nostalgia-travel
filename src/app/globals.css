@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --cream: #fff4e1;
+  --cream-2: #f7e7cf;
+  --teal-deep: #0b2d2e;
+  --orange-vintage: #e07b39;
+  color-scheme: light;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  @apply bg-cream-50 text-ink font-body antialiased;
+}
+
+::selection {
+  background: rgba(224, 123, 57, 0.25);
+}
+
