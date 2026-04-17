@@ -52,10 +52,16 @@ export default function ProfilePage() {
     fetchData();
 
     // --- ระบบ Real-time: ฟังการอัปเดตจาก Database ---
-    const { data: { session } } = supabase.auth.onAuthStateChange((_event, session) => {
-       if (session) fetchData();
-    });
+const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
+  if (session) fetchData();
+});
 
+// และตรงส่วน return (cleanup) ด้านล่าง ให้แก้เป็น:
+return () => {
+  supabase.removeChannel(channel);
+  window.removeEventListener("focus", fetchData);
+  authListener.subscription.unsubscribe(); // เพิ่มบรรทัดนี้เพื่อความถูกต้อง
+};
     const channel = supabase
       .channel('schema-db-changes')
       .on('postgres_changes', { 
