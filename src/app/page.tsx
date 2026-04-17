@@ -13,7 +13,6 @@ export default function HomePage() {
   const supabase = createClient();
   const router = useRouter();
 
-  // --- State สำหรับจัดการ Modal ---
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedStory, setSelectedStory] = useState<any>(null);
 
@@ -21,7 +20,6 @@ export default function HomePage() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewId, setPreviewId] = useState<string | null>(null);
 
-  // ข้อมูลเนื้อหาสำหรับ Explore Story (เด้งขึ้นมาเมื่อกดปุ่ม)
   const storyDetails: any = {
     "Dear Dakanda (2005)": {
       location: "Chiang Mai & Uthai Thani",
@@ -125,7 +123,6 @@ export default function HomePage() {
       <Navbar />
       <Hero />
 
-      {/* --- Section: Movies --- */}
       <section id="movies" className="border-t border-cream-200 bg-white">
         <div className="mx-auto max-w-6xl px-4 py-20">
           <div className="mb-12">
@@ -159,7 +156,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* --- Modal แสดงรายละเอียด Story --- */}
       {isModalOpen && selectedStory && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-teal-900/60 backdrop-blur-sm animate-in fade-in duration-300">
           <div className="bg-[#FDF9F0] w-full max-w-xl rounded-[3rem] overflow-hidden shadow-2xl relative">
@@ -201,7 +197,6 @@ export default function HomePage() {
         </div>
       )}
 
-      {/* --- Section: Secondary Cities --- */}
       <section id="secondary-cities" className="border-t border-cream-200 bg-cream-50/50">
         <div className="mx-auto max-w-6xl px-4 py-20">
           <div className="mb-12 text-center md:text-left">

@@ -9,7 +9,6 @@ export default function LoginPage() {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    // จำลองการ Login สำหรับพรีเซนต์
     if (email && password) {
       alert("ยินดีต้อนรับสู่ Nostalgia! (เชื่อมต่อ Supabase สำเร็จ)");
       window.location.href = "/"; 
@@ -19,8 +18,6 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-cream-50 flex items-center justify-center p-6 font-body">
       <div className="max-w-md w-full bg-white rounded-3xl shadow-premium p-10 border border-cream-200">
-        
-        {/* ปุ่มกลับหน้าแรก */}
         <Link href="/" className="flex items-center gap-2 text-teal-800 text-sm mb-8 hover:text-orange-500 transition-all">
           <ArrowLeft size={16} /> กลับหน้าหลัก
         </Link>

@@ -14,13 +14,13 @@ export default function ProfilePage() {
   const router = useRouter();
   const supabase = createClient();
 
-  // --- ฟังก์ชันดึงข้อมูลทั้งหมด (ดึงใหม่เมื่อถูกเรียก) ---
+
   const fetchData = useCallback(async () => {
     const { data: { session } } = await supabase.auth.getSession();
     const userId = session?.user?.id || "655848e9-1e5d-4bb4-b76c-3a478493750a"; // Fallback ID ของคุณ
 
     if (userId) {
-      // 1. ดึงข้อมูลโปรไฟล์ (ไม่ใช้ Cache)
+   
       const { data: profileData } = await supabase
         .from("profiles")
         .select("*")
@@ -29,7 +29,7 @@ export default function ProfilePage() {
       
       if (profileData) setProfile(profileData);
 
-      // 2. ดึงประวัติการเช็คอิน
+
       const { data: checkinData } = await supabase
         .from("check_ins")
         .select(`*, locations(name)`)
@@ -37,7 +37,6 @@ export default function ProfilePage() {
         .order('created_at', { ascending: false });
       setCheckins(checkinData || []);
 
-      // 3. ดึง Leaderboard ล่าสุด
       const { data: leaders } = await supabase
         .from("profiles")
         .select("username, points")
@@ -51,16 +50,15 @@ export default function ProfilePage() {
   useEffect(() => {
     fetchData();
 
-    // --- ระบบ Real-time: ฟังการอัปเดตจาก Database ---
 const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
   if (session) fetchData();
 });
 
-// และตรงส่วน return (cleanup) ด้านล่าง ให้แก้เป็น:
+
 return () => {
   supabase.removeChannel(channel);
   window.removeEventListener("focus", fetchData);
-  authListener.subscription.unsubscribe(); // เพิ่มบรรทัดนี้เพื่อความถูกต้อง
+  authListener.subscription.unsubscribe(); 
 };
     const channel = supabase
       .channel('schema-db-changes')
@@ -69,11 +67,11 @@ return () => {
         schema: 'public', 
         table: 'profiles' 
       }, () => {
-        fetchData(); // เมื่อมีการ Update ในตาราง profiles ให้ดึงข้อมูลใหม่ทันที
+        fetchData();
       })
       .subscribe();
 
-    // --- ไม้ตาย: ดึงข้อมูลใหม่ทุกครั้งที่สลับแท็บกลับมาดู (Focus) ---
+    
     window.addEventListener("focus", fetchData);
 
     return () => {

@@ -42,10 +42,8 @@ export default function SignUpPage() {
   };
 
   return (
-    // สีพื้นหลัง Cream ละมุนแบบในรูป
     <div className="min-h-screen bg-[#FDF9F0] flex items-center justify-center p-6 font-body">
       
-      {/* การ์ดสีขาวขอบมน (Rounded 3xl) */}
       <div className="max-w-md w-full bg-white rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.05)] p-10 border border-cream-100">
         
         <Link href="/" className="flex items-center gap-2 text-[#2D433D]/60 text-sm mb-8 hover:text-[#2D433D] transition-all">
@@ -53,7 +51,6 @@ export default function SignUpPage() {
         </Link>
 
         <div className="flex flex-col items-center mb-8">
-          {/* ไอคอนสีส้มพาสเทล */}
           <div className="bg-[#E98D4D] p-4 rounded-2xl text-white mb-6 shadow-sm">
             <UserPlus size={32} />
           </div>
@@ -62,7 +59,6 @@ export default function SignUpPage() {
         </div>
 
         <form onSubmit={handleSignUp} className="space-y-5">
-          {/* ช่อง Username */}
           <div className="space-y-2">
             <label className="text-sm font-bold text-[#0F2922] ml-1">Username</label>
             <div className="relative">
@@ -78,7 +74,6 @@ export default function SignUpPage() {
             </div>
           </div>
 
-          {/* ช่อง Email */}
           <div className="space-y-2">
             <label className="text-sm font-bold text-[#0F2922] ml-1">Email Address</label>
             <div className="relative">
@@ -94,7 +89,6 @@ export default function SignUpPage() {
             </div>
           </div>
 
-          {/* ช่อง Password */}
           <div className="space-y-2">
             <label className="text-sm font-bold text-[#0F2922] ml-1">Create Password</label>
             <div className="relative">
@@ -110,7 +104,6 @@ export default function SignUpPage() {
             </div>
           </div>
           
-          {/* ปุ่มสีเขียว Teal เข้มตามในรูป */}
           <button 
             disabled={loading}
             className="w-full bg-[#0F2922] text-[#FDF9F0] py-4 rounded-2xl font-bold text-lg shadow-lg hover:bg-[#163a30] transition-all disabled:opacity-50 mt-4 active:scale-[0.98]"

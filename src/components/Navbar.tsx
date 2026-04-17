@@ -19,7 +19,7 @@ export function Navbar() {
   const router = useRouter();
   const supabase = createClient();
 
-  // เช็คสถานะการล็อกอินเมื่อโหลด Component
+
   useEffect(() => {
     const getUser = async () => {
       const { data: { session } } = await supabase.auth.getSession();
@@ -27,7 +27,6 @@ export function Navbar() {
     };
     getUser();
 
-    // ติดตามการเปลี่ยนแปลงสถานะ (Login/Logout) แบบ Real-time
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
     });
@@ -38,7 +37,7 @@ export function Navbar() {
   const handleLogout = async () => {
     await supabase.auth.signOut();
     router.push("/");
-    router.refresh(); // บังคับให้หน้าเว็บรีเฟรชสถานะ
+    router.refresh(); 
   };
 
   return (
@@ -51,7 +50,6 @@ export function Navbar() {
           <span className="font-heading text-xl font-semibold tracking-tight text-teal-900">Nostalgia</span>
         </Link>
 
-        {/* --- Desktop Navigation --- */}
         <nav className="hidden items-center gap-1 md:flex">
           {navItems.map(({ href, label }) => (
             <a key={href} href={href} className="rounded-full px-4 py-2 text-sm font-medium text-teal-900/80 transition hover:bg-cream-100 hover:text-teal-900">
@@ -61,14 +59,14 @@ export function Navbar() {
           
           <div className="ml-4 flex items-center gap-2">
             {user ? (
-              /* ถ้าล็อกอินแล้ว โชว์ปุ่ม Profile */
+            
               <div className="flex items-center gap-3">
                 <Link href="/profile" className="flex items-center gap-2 rounded-full bg-teal-900 px-5 py-2 text-sm font-bold text-white shadow-premium transition hover:bg-teal-800">
                   <User size={16} /> My Profile
                 </Link>
               </div>
             ) : (
-              /* ถ้ายังไม่ล็อกอิน โชว์ Login / Sign Up */
+
               <>
                 <Link href="/login" className="px-4 py-2 text-sm font-bold text-teal-900 hover:text-orange-600 transition-all">Login</Link>
                 <Link href="/signup" className="inline-flex items-center gap-2 rounded-full bg-orange-500 px-5 py-2 text-sm font-bold text-white shadow-premium transition hover:bg-orange-600">Sign Up</Link>
@@ -77,13 +75,13 @@ export function Navbar() {
           </div>
         </nav>
 
-        {/* Mobile Toggle */}
+     
         <button className="inline-flex items-center justify-center rounded-full border border-cream-200 bg-cream-50 px-3 py-2 text-teal-900 shadow-sm transition hover:bg-cream-100 md:hidden" onClick={() => setOpen((v) => !v)}>
           {open ? <X className="size-5" /> : <Menu className="size-5" />}
         </button>
       </div>
 
-      {/* --- Mobile Navigation --- */}
+    
       <AnimatePresence>
         {open && (
           <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="border-t border-cream-200/70 bg-cream-50/95 backdrop-blur md:hidden">

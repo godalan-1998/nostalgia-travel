@@ -13,7 +13,7 @@ export default function CheckinPage() {
   
   const supabase = createClient();
 
-  // ฟังก์ชันจัดการการเลือกไฟล์รูปภาพ
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -23,7 +23,6 @@ export default function CheckinPage() {
   };
 
   const handleCheckIn = async () => {
-    // 1. ตรวจสอบว่าเลือกรูปหรือยัง
     if (!selectedFile) {
       alert("กรุณาถ่ายรูปหรือเลือกรูปภาพเพื่อยืนยันการเช็คอินก่อนครับ 📸");
       return;
@@ -32,7 +31,7 @@ export default function CheckinPage() {
     setLoading(true);
 
     try {
-      // 2. ตรวจสอบ Session ผู้ใช้
+  
       const { data: { session } } = await supabase.auth.getSession();
       if (!session?.user) {
         alert("กรุณาล็อกอินก่อนทำการเช็คอินครับ");
@@ -42,7 +41,6 @@ export default function CheckinPage() {
 
       const userId = session.user.id;
 
-      // 3. อัปโหลดรูปภาพไปยัง Supabase Storage (Bucket: checkin-images)
       const fileExt = selectedFile.name.split('.').pop();
       const fileName = `${userId}-${Date.now()}.${fileExt}`;
       
@@ -53,24 +51,24 @@ export default function CheckinPage() {
 
       if (uploadError) throw uploadError;
 
-      // 4. รับ Public URL ของรูปภาพ
+  
       const { data: { publicUrl } } = supabase
         .storage
         .from('checkin-images')
         .getPublicUrl(fileName);
 
-      // 5. บันทึกข้อมูลลงตาราง check_ins
+     
       const { error: dbError } = await supabase.from("check_ins").insert([
         { 
           user_id: userId, 
-          location_id: 6, // แก้เป็น ID จริงจากตาราง locations (เช่น 6 คือดอยเสมอดาว)
+          location_id: 6, 
           user_image_url: publicUrl 
         }
       ]);
 
       if (dbError) throw dbError;
 
-      // 6. อัปเดตแต้มสะสมในตาราง profiles (+150 แต้ม)
+     
       const { data: profile } = await supabase
         .from("profiles")
         .select("points")
@@ -86,7 +84,7 @@ export default function CheckinPage() {
 
       if (updateError) throw updateError;
 
-      // 7. เสร็จสิ้นกระบวนการ
+
       setCheckedIn(true);
       alert("เช็คอินสำเร็จ! คุณได้รับ +150 แต้มสะสม 🏆");
 
@@ -127,7 +125,6 @@ export default function CheckinPage() {
             </div>
           ) : (
             <div className="space-y-6">
-              {/* ส่วนเลือกรูปภาพ / แสดงตัวอย่างรูป */}
               <div className="space-y-2">
                 <label className="block text-left text-xs font-black text-teal-900/40 uppercase tracking-widest">
                   Proof of Visit (Required)
@@ -156,7 +153,6 @@ export default function CheckinPage() {
                 </div>
               </div>
 
-              {/* ปุ่มยืนยันการเช็คอิน */}
               <button
                 onClick={handleCheckIn}
                 disabled={loading}
