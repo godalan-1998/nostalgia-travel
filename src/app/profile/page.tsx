@@ -4,10 +4,7 @@ import { useEffect, useState, useCallback, useMemo } from "react";
 import { createClient } from "../../utils/supabase/client";
 import { Navbar } from "@/components/Navbar";
 import { useRouter } from "next/navigation";
-import { 
-  Trophy, Image as ImageIcon, Loader2, 
-  Camera, Award, Pencil, Check, History, Sparkles, X, Crown, MapPin
-} from "lucide-react";
+import { Trophy, Image as ImageIcon, Loader2,Camera, Award, Pencil, Check, History, Sparkles, X, Crown, MapPin} from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 // --- Configuration ---
@@ -54,7 +51,6 @@ export default function ProfilePage() {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) { router.push("/login"); return; }
       const userId = session.user.id;
-
       const { data: profileData } = await supabase.from("profiles").select("*").eq("id", userId).single();
       if (profileData) {
         setProfile(profileData);
