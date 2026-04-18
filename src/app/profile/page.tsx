@@ -16,7 +16,7 @@ const locationMap: Record<number, string> = {
 };
 
 // --- Animation Variants ---
-const containerVars = {
+const containerVars: any = {
   hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.2 } }
 };
@@ -27,16 +27,17 @@ const itemVars: any = {
     opacity: 1, 
     y: 0, 
     scale: 1, 
-    transition: { 
-      duration: 0.6, 
-      ease: "easeOut" 
-    } 
+    transition: { duration: 0.6, ease: "easeOut" } 
   }
 };
 
-const badgeGlow = {
+const badgeGlow: any = {
   initial: { opacity: 0.1, scale: 0.9 },
-  animate: { opacity: [0.1, 0.4, 0.1], scale: [0.9, 1.2, 0.9], transition: { duration: 3, repeat: Infinity, ease: "easeInOut" } }
+  animate: { 
+    opacity: [0.1, 0.4, 0.1], 
+    scale: [0.9, 1.2, 0.9], 
+    transition: { duration: 3, repeat: Infinity, ease: "easeInOut" } 
+  }
 };
 
 export default function ProfilePage() {
