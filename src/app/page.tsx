@@ -25,7 +25,7 @@ export default function HomePage() {
   
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  // --- 🟢 1. ระบบดึงสถานะเพื่อล็อคปุ่ม (Locking System) ---
+  // --- (Locking System) ---
   const fetchStatus = useCallback(async () => {
     const { data: { session } } = await supabase.auth.getSession();
     if (session) {
@@ -41,7 +41,7 @@ export default function HomePage() {
     fetchStatus();
   }, [fetchStatus]);
 
-  // ฟังก์ชันคำนวณสถานะคูลดาวน์รายสถานที่
+  // cooldawn
   const getLockStatus = (locationId: number) => {
     const last = userCheckins
       .filter(c => c.location_id === locationId)
@@ -61,7 +61,7 @@ export default function HomePage() {
     return { isLocked: false, text: "" };
   };
 
-  // --- ข้อมูลเนื้อหา (Story Details & Cities) ---
+  // --- (Story Details & Cities) ---
   const storyDetails: any = {
     "Dear Dakanda (2005)": {
       location: "Chiang Mai & Uthai Thani",
@@ -100,7 +100,7 @@ export default function HomePage() {
     { id: 7, title: "Phra Prang Sam Yot", img: "https://cms.dmpcdn.com/travel/2020/02/18/f5de90a0-521b-11ea-b4a0-631ea126a728_original.jpg", meta: "Ancient Ruins · Wildlife Frames" },
   ];
 
-  // --- 🟢 2. ระบบเล่นเสียง & แชร์ ---
+  // --- audio share ---
   const playAudio = (url: string) => {
     if (audioRef.current) { audioRef.current.pause(); audioRef.current.currentTime = 0; }
     const audio = new Audio(url); audio.loop = true; audio.volume = 0.4; audioRef.current = audio;
@@ -134,7 +134,7 @@ export default function HomePage() {
     if (platform === 'fb') window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
   };
 
-  // --- 🟢 3. ระบบเช็คอิน (Check-in Logic) ---
+  // --- (Check-in Logic) ---
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, id: string) => {
     const file = e.target.files?.[0];
     if (file) { setSelectedFile(file); setPreviewId(id); }
@@ -163,7 +163,7 @@ export default function HomePage() {
       } else {
         alert(`เช็คอินสำเร็จ! 🏆`);
         setSelectedFile(null); setPreviewId(null);
-        fetchStatus(); // รีเฟรชสถานะล็อคทันที
+        fetchStatus(); // refresh
       }
     } catch (err) { alert("เกิดข้อผิดพลาด"); } finally { setLoadingId(null); }
   };
@@ -255,7 +255,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 4. Secondary Cities (แก้ไขการล็อคและแถบเขียว) */}
+      {/* 4. Secondary Cities */}
       <section id="secondary-cities" className="bg-white py-24 border-t border-cream-100">
         <div className="mx-auto max-w-6xl px-4 text-left">
           <span className="text-orange-500 font-black text-[10px] uppercase tracking-[0.4em] mb-4 block">Destinations</span>
@@ -286,7 +286,7 @@ export default function HomePage() {
                         onChange={(e) => handleFileChange(e, x.title)} 
                         disabled={lock.isLocked}
                       />
-                      {/* 🟢 แถบเขียวเมื่อเลือกรูปสำเร็จ (เหมือนในรูป) */}
+                  
                       <label 
                         htmlFor={lock.isLocked ? "" : `file-${x.title}`} 
                         className={`flex flex-col items-center justify-center w-full h-40 border-2 border-dashed rounded-[2.5rem] transition-all duration-500 ${
@@ -325,7 +325,7 @@ export default function HomePage() {
                       ) : lock.isLocked ? (
                         lock.text
                       ) : (
-                        <>Check-in for +150 EXP <ChevronRight size={18} /></>
+                        <>Check-in for +150 Point <ChevronRight size={18} /></>
                       )}
                     </button>
                   </div>
