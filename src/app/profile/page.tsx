@@ -21,7 +21,7 @@ const containerVars = {
   visible: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.2 } }
 };
 
-const itemVars = {
+const itemVars: any = {
   hidden: { opacity: 0, y: 30, scale: 0.95 },
   visible: { 
     opacity: 1, 
@@ -29,7 +29,7 @@ const itemVars = {
     scale: 1, 
     transition: { 
       duration: 0.6, 
-      ease: "easeOut" // แก้ตรงนี้จาก [0.22, 1, 0.36, 1] เป็น "easeOut"
+      ease: "easeOut" 
     } 
   }
 };
